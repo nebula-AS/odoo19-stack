@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- GRAND LIVRE STANDARD -->
+    <template id="general_ledger_sage_headers"
+              inherit_id="account_financial_report.report_general_ledger_lines">
+        <xpath expr="//div[hasclass('act_as_thead')]//div[hasclass('labels')]/div[1]" position="replace">
+            <div class="act_as_cell first_column" style="width: 6%;">Date</div>
+        </xpath>
+        <xpath expr="//div[hasclass('act_as_thead')]//div[hasclass('labels')]/div[2]" position="replace">
+            <div class="act_as_cell" style="width: 10%;">Piece</div>
+        </xpath>
+        <xpath expr="//div[hasclass('act_as_thead')]//div[hasclass('labels')]/div[3]" position="replace">
+            <div class="act_as_cell" style="width: 6%;">Journal</div>
+        </xpath>
+        <xpath expr="//div[hasclass('act_as_thead')]//div[hasclass('labels')]/div[4]" position="replace">
+            <div class="act_as_cell" style="width: 7%;">Compte</div>
+        </xpath>
+        <xpath expr="//div[hasclass('act_as_thead')]//div[hasclass('labels')]/div[6]" position="replace">
+            <div class="act_as_cell" style="width: 15%;">Partenaire</div>
+        </xpath>
+        <xpath expr="//div[hasclass('act_as_thead')]//div[hasclass('labels')]/div[7]" position="replace">
+            <div class="act_as_cell" style="width: 22%;">Ref-Libelle</div>
+        </xpath>
+        <xpath expr="//div[hasclass('act_as_thead')]//div[hasclass('labels')]/div[9]" position="replace">
+            <div class="act_as_cell amount" style="width: 11%;">Mouvement debit</div>
+        </xpath>
+        <xpath expr="//div[hasclass('act_as_thead')]//div[hasclass('labels')]/div[10]" position="replace">
+            <div class="act_as_cell amount" style="width: 11%;">Mouvement credit</div>
+        </xpath>
+        <xpath expr="//div[hasclass('act_as_thead')]//div[hasclass('labels')]/div[11]" position="replace">
+            <div class="act_as_cell amount" style="width: 12%;">Solde progressif</div>
+        </xpath>
+        <xpath expr="//div[hasclass('act_as_thead')]" position="before">
+            <style>
+                .sage_gl .act_as_row > div:nth-child(5),
+                .sage_gl .act_as_row > div:nth-last-child(6),
+                .sage_gl .act_as_row > div:nth-last-child(2),
+                .sage_gl .act_as_row > div:nth-last-child(1) { display: none !important; }
+            </style>
+        </xpath>
+        <xpath expr="//div[hasclass('data_table')]" position="attributes">
+            <attribute name="class" add="sage_gl" separator=" "/>
+        </xpath>
+    </template>
+    <!-- GRAND LIVRE NON-LETTRE -->
+    <template id="open_items_sage_headers"
+              inherit_id="account_financial_report.report_open_items_lines_header">
+        <xpath expr="//div[hasclass('labels')]/div[1]" position="replace">
+            <div class="act_as_cell first_column" style="width: 6%;">Date</div>
+        </xpath>
+        <xpath expr="//div[hasclass('labels')]/div[2]" position="replace">
+            <div class="act_as_cell" style="width: 10%;">Piece</div>
+        </xpath>
+        <xpath expr="//div[hasclass('labels')]/div[3]" position="replace">
+            <div class="act_as_cell" style="width: 6%;">Journal</div>
+        </xpath>
+        <xpath expr="//div[hasclass('labels')]/div[4]" position="replace">
+            <div class="act_as_cell" style="width: 7%;">Compte</div>
+        </xpath>
+        <xpath expr="//div[hasclass('labels')]/div[5]" position="replace">
+            <div class="act_as_cell" style="width: 18%;">Partenaire</div>
+        </xpath>
+        <xpath expr="//div[hasclass('labels')]/div[6]" position="replace">
+            <div class="act_as_cell" style="width: 28%;">Ref-Libelle</div>
+        </xpath>
+        <xpath expr="//div[hasclass('labels')]/div[8]" position="replace">
+            <div class="act_as_cell amount" style="width: 12%;">Mouvement debit</div>
+        </xpath>
+        <xpath expr="//div[hasclass('labels')]" position="before">
+            <style>
+                .sage_oi_row > div:nth-child(7),
+                .sage_oi_row > div:nth-child(9),
+                .sage_oi_row > div:nth-child(10),
+                .sage_oi_row > div:nth-child(11) { display: none !important; }
+            </style>
+        </xpath>
+        <xpath expr="//div[hasclass('labels')]" position="attributes">
+            <attribute name="class" add="sage_oi_row" separator=" "/>
+        </xpath>
+    </template>
+    <template id="open_items_sage_lines"
+              inherit_id="account_financial_report.report_open_items_lines">
+        <xpath expr="//div[hasclass('lines')]" position="attributes">
+            <attribute name="class" add="sage_oi_row" separator=" "/>
+        </xpath>
+    </template>
+    <!-- LIVRE-JOURNAL : Masquer Taxes dans HEADER -->
+    <template id="journal_ledger_sage_header"
+              inherit_id="account_financial_report.report_journal_ledger_journal_table_header">
+        <xpath expr="//div[@name='taxes']" position="attributes">
+            <attribute name="style">display: none !important; width: 0 !important;</attribute>
+        </xpath>
+    </template>
+    <!-- LIVRE-JOURNAL : Masquer Taxes dans PREMIERE LIGNE -->
+    <template id="journal_ledger_sage_first_line"
+              inherit_id="account_financial_report.report_journal_ledger_journal_first_line">
+        <xpath expr="//div[@name='taxes']" position="attributes">
+            <attribute name="style">display: none !important; width: 0 !important;</attribute>
+        </xpath>
+    </template>
+    <!-- LIVRE-JOURNAL : Masquer Taxes dans LIGNES DE DETAIL -->
+    <template id="journal_ledger_sage_move_line"
+              inherit_id="account_financial_report.report_journal_move_line">
+        <xpath expr="//div[@name='taxes']" position="attributes">
+            <attribute name="style">display: none !important; width: 0 !important;</attribute>
+        </xpath>
+    </template>
+</odoo>

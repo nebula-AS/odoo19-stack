@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_cash_brouillard_wizard_form" model="ir.ui.view">
+        <field name="name">cash.brouillard.wizard.form</field>
+        <field name="model">cash.brouillard.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Brouillard de caisse">
+                <sheet>
+                    <group>
+                        <field name="journal_id" options="{'no_create': True, 'no_open': True}"/>
+                    </group>
+                    <group>
+                        <group><field name="date_debut"/></group>
+                        <group><field name="date_fin"/></group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_afficher" string="Actualiser" type="object" class="btn-primary"/>
+                    <button name="action_imprimer_pdf" string="Imprimer PDF" type="object" class="btn-secondary"/>
+                    <button string="Annuler" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_cash_brouillard_wizard" model="ir.actions.act_window">
+        <field name="name">Brouillard de caisse</field>
+        <field name="res_model">cash.brouillard.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <menuitem id="menu_cash_brouillard_wizard"
+              name="Brouillard de caisse"
+              parent="account.menu_finance_reports"
+              action="action_cash_brouillard_wizard"
+              sequence="109"/>
+</odoo>

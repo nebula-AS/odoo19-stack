@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_cash_move_reason,cash.move.reason,model_account_cash_move_reason,account.group_account_user,1,1,1,1
+access_cash_move_reason_manager,cash.move.reason.manager,model_account_cash_move_reason,account.group_account_manager,1,1,1,1
+access_cash_brouillard_wizard,cash.brouillard.wizard,model_cash_brouillard_wizard,account.group_account_user,1,1,1,1
+access_cash_brouillard_wizard_manager,cash.brouillard.wizard.manager,model_cash_brouillard_wizard,account.group_account_manager,1,1,1,1

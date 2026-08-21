@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_cash_brouillard_template">
+        <t t-call="web.html_container">
+            <div class="page" style="font-family: Arial, sans-serif; padding: 20px;">
+                <table style="width:100%; margin-bottom:20px;">
+                    <tr>
+                        <td style="width:50%; vertical-align:top;">
+                            <t t-if="res_company.logo">
+                                <img t-att-src="image_data_uri(res_company.logo)" style="max-height:60px;"/>
+                            </t>
+                        </td>
+                        <td style="width:50%; text-align:right; vertical-align:top;">
+                            <strong><t t-esc="res_company.name"/></strong><br/>
+                            <t t-if="res_company.street"><t t-esc="res_company.street"/><br/></t>
+                            <t t-if="res_company.city"><t t-esc="res_company.city"/></t>
+                        </td>
+                    </tr>
+                </table>
+                <hr style="border-top: 2px solid #333;"/>
+                <h2 style="text-align:center; font-weight:bold; text-transform:uppercase; margin:15px 0 5px 0;">
+                    BROUILLARD DE CAISSE
+                </h2>
+                <h4 style="text-align:center; margin:0 0 15px 0;">
+                    Du <t t-esc="data['date_debut']"/> au <t t-esc="data['date_fin']"/>
+                </h4>
+                <table class="table table-bordered" style="width:100%; font-size:12px; margin-bottom:15px; border-collapse:collapse;">
+                    <thead>
+                        <tr style="background-color:#e8e8e8; text-align:center; font-weight:bold;">
+                            <th style="width:50%; border:1px solid #ccc; padding:6px;">CAISSE</th>
+                            <th colspan="2" style="border:1px solid #ccc; padding:6px;">SOLDE D'OUVERTURE</th>
+                        </tr>
+                        <tr style="background-color:#e8e8e8; text-align:center; font-weight:bold;">
+                            <th style="border:1px solid #ccc; padding:4px;"></th>
+                            <th style="border:1px solid #ccc; padding:4px;">COMPTABLE</th>
+                            <th style="border:1px solid #ccc; padding:4px;">REEL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="text-align:center;">
+                            <td style="border:1px solid #ccc; padding:6px;"><t t-esc="data['journal_name']"/></td>
+                            <td style="border:1px solid #ccc; padding:6px;"><t t-esc="'{:,.0f}'.format(data['solde_ouverture']).replace(',', ' ')"/></td>
+                            <td style="border:1px solid #ccc; padding:6px;"><t t-esc="'{:,.0f}'.format(data['solde_ouverture']).replace(',', ' ')"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table style="width:100%; font-size:11px; border-collapse:collapse;">
+                    <thead>
+                        <tr style="background-color:#e8e8e8; text-align:center; font-weight:bold;">
+                            <th style="width:15%; border:1px solid #ccc; padding:5px;">Ref.</th>
+                            <th style="width:12%; border:1px solid #ccc; padding:5px;">Date</th>
+                            <th style="width:35%; border:1px solid #ccc; padding:5px;">Operation</th>
+                            <th style="width:12%; border:1px solid #ccc; padding:5px; text-align:right;">Entree</th>
+                            <th style="width:12%; border:1px solid #ccc; padding:5px; text-align:right;">Sortie</th>
+                            <th style="width:14%; border:1px solid #ccc; padding:5px; text-align:right;">Solde</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="data['lines']" t-as="line">
+                            <tr>
+                                <td style="border:1px solid #ccc; padding:4px;"><t t-esc="line['ref']"/></td>
+                                <td style="border:1px solid #ccc; padding:4px; text-align:center;"><t t-esc="line['date']"/></td>
+                                <td style="border:1px solid #ccc; padding:4px;"><t t-esc="line['libelle']"/></td>
+                                <td style="border:1px solid #ccc; padding:4px; text-align:right;"><t t-if="line['debit']"><t t-esc="'{:,.0f}'.format(line['debit']).replace(',', ' ')"/></t><t t-else="">0</t></td>
+                                <td style="border:1px solid #ccc; padding:4px; text-align:right;"><t t-if="line['credit']"><t t-esc="'{:,.0f}'.format(line['credit']).replace(',', ' ')"/></t><t t-else="">0</t></td>
+                                <td style="border:1px solid #ccc; padding:4px; text-align:right;"><t t-esc="'{:,.0f}'.format(line['solde']).replace(',', ' ')"/></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                    <tfoot>
+                        <tr style="font-weight:bold; background-color:#e8e8e8;">
+                            <td colspan="3" style="border:1px solid #ccc; padding:5px; text-align:center;">TOTAUX</td>
+                            <td style="border:1px solid #ccc; padding:5px; text-align:right;"><t t-esc="'{:,.0f}'.format(data['total_debit']).replace(',', ' ')"/></td>
+                            <td style="border:1px solid #ccc; padding:5px; text-align:right;"><t t-esc="'{:,.0f}'.format(data['total_credit']).replace(',', ' ')"/></td>
+                            <td style="border:1px solid #ccc; padding:5px; text-align:right;"><t t-esc="'{:,.0f}'.format(data['solde_final']).replace(',', ' ')"/></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </t>
+    </template>
+    <record id="action_report_cash_brouillard" model="ir.actions.report">
+        <field name="name">Brouillard de Caisse</field>
+        <field name="model">cash.brouillard.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">account_cash_move_reason.report_cash_brouillard_template</field>
+        <field name="report_file">account_cash_move_reason.report_cash_brouillard_template</field>
+        <field name="binding_model_id" ref="model_cash_brouillard_wizard"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>
